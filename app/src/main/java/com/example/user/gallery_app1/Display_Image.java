@@ -4,21 +4,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Display_Image extends AppCompatActivity {
     RecyclerView recyclerview;
     RecycleAdapter adapter;
+    String full ;
+    String da;
     ArrayList<images>arrayList = new ArrayList<images>();
     //ArrayList<images1>arrayList1 = new ArrayList<images1>();
             RecyclerView.LayoutManager layoutManager;
@@ -32,34 +37,46 @@ public class Display_Image extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 2);
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setHasFixedSize(true);
-       JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-           @Override
-           public void onResponse(JSONArray response) {
-               int count =0;
-               while(count<response.length())
-               {
-                   try {
-                       JSONObject jsonObject =response.getJSONObject(count);
-                       arrayList.add(new images(jsonObject.getString("imageUrlPrefix"),jsonObject.getString("featured_image")));
-                       count++;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject k = response.getJSONObject("slider");
+                    full=k.getString("imageUrlPrefix");
+                    JSONArray f =k.getJSONArray("posts");
+                    JSONObject q = f.getJSONObject(0);
+                     da = q.getString("featured_image");
+                    full =full +da;
+                    arrayList.add(new images(full));
+                    k =response.getJSONObject("top4");
+                    String image = k.getString("imageUrlPrefix");
+                    f =k.getJSONArray("posts");
+                    for(int g =0;g<f.length();g++)
+                    {
+                        q=f.getJSONObject(g);
+                        da = q.getString("featured_image");
+                        arrayList.add(new images(image+da));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                adapter = new RecycleAdapter(arrayList,Display_Image.this);
+                recyclerview.setAdapter(adapter);
 
 
-                   } catch (JSONException e) {
-                       e.printStackTrace();
-                   }
-               }
-               adapter = new RecycleAdapter(arrayList,Display_Image.this);
-               recyclerview.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
 
 
-           }
-       }, new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
 
-           }
-       });
-        MySingleton.getInstance(Display_Image.this).addToRequest(jsonArrayRequest);
+           MySingleton.getInstance(Display_Image.this).addToRequest(jsonObjectRequest);
 
 
     }
