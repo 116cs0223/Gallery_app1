@@ -2,6 +2,7 @@ package com.example.user.gallery_app1;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,7 +28,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_element,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,activity,array);
     }
 
     @Override
@@ -41,12 +42,26 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     public int getItemCount() {
         return array.size();
     }
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView ImgView;
-
-        public MyViewHolder(View itemView) {
+        ArrayList<images>arrayList = new ArrayList<images>();
+        Context ctx;
+        public MyViewHolder(View itemView,Context ctx,ArrayList<images> arrayList) {
             super(itemView);
+            this.arrayList = arrayList;
+            this.ctx= ctx;
+            itemView.setOnClickListener(this);
             ImgView=(ImageView)itemView.findViewById(R.id.imgview);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            images img = this.arrayList.get(position);
+            Intent intent = new Intent(this.ctx,image_onclick.class);
+            intent.putExtra("img",img.getUrl());
+            this.ctx.startActivity(intent);
+
         }
     }
 }
