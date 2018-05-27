@@ -24,8 +24,8 @@ public class Display_Image extends AppCompatActivity {
     RecycleAdapter adapter;
     String full ;
     String da;
-    ArrayList<images>arrayList = new ArrayList<images>();
-    //ArrayList<images1>arrayList1 = new ArrayList<images1>();
+    public ArrayList<images>arrayList = new ArrayList<images>();
+
             RecyclerView.LayoutManager layoutManager;
     String url ="http://mondaymorning.nitrkl.ac.in/api/post/get/featured";
 

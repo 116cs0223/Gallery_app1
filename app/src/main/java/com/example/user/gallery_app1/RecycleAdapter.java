@@ -33,7 +33,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-       // String path = array.get(position).getImage_url_prefix()+array.get(position).getFeaturedimage();
         Glide.with(activity).load(array.get(position).getUrl()).into(holder.ImgView);
 
     }
@@ -44,7 +43,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView ImgView;
-        ArrayList<images>arrayList = new ArrayList<images>();
+       public  ArrayList<images>arrayList = new ArrayList<images>();
         Context ctx;
         public MyViewHolder(View itemView,Context ctx,ArrayList<images> arrayList) {
             super(itemView);
@@ -60,6 +59,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
             images img = this.arrayList.get(position);
             Intent intent = new Intent(this.ctx,image_onclick.class);
             intent.putExtra("img",img.getUrl());
+
             this.ctx.startActivity(intent);
 
         }

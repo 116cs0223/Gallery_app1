@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f28b8b"
+
     tools:context=".MainActivity">
+
 
 
     <Button
@@ -22,9 +23,8 @@
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
-        android:background="#e40654"
+        android:background="@color/colorPrimary"
         android:onClick="seeGallery"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

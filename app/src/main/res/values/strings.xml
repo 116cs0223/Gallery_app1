@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Gallery_App1</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_display_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#15e7ba"
+    android:background="#f9f2e6e5"
     tools:context=".Display_Image"
-    android:orientation="vertical">
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="551dp"
+        android:layout_height="match_parent"
         android:scrollbars="vertical" />
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
